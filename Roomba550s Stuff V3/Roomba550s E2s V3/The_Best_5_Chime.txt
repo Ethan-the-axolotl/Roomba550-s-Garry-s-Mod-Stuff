@@ -1,0 +1,221 @@
+@name The Best 5 chime
+@inputs A D
+@outputs Diff Quill [Note1 Note2 Note3 Note4 Note5]:string
+@persist T:table [H1 H2 H3 H4 H5]:entity [Note1 Note2 Note3 SoundOn SoundOff]:string Q UseSoundOff FadeTime Diff StartDiff Interval Quill MaxQuill Quinterval
+@trigger 
+@model models/props_bennjo/bigboy_whistle.mdl
+#[
+    Usage Instructions:
+    Press either A or D to blow the whistle, press both simultaneously to blow full blast.
+    
+    Note Chart: Use for creating your own chords!
+      C1#  D1#       F1#  G1#  A1#       C2#  D2#       F2#  G2#  A2#        C3#   D3#         F3#   G3#   A3# 
+      27   30        35   40   45        53   59        70   79   90         106   118         140   158   180
+    ===================================================================================================================
+    25   29   32   34   38   42   47   50   57   63   67   75   83   94   100   114   126   134   150   168   188   200
+    C1   D1   E1   F1   G1   A1   B1   C2   D2   E2   F2   G2   A2   B2   C3    D3    E3    F3    G3    A3    B3    C4
+]#
+
+if(first()|duped()){
+    
+    SoundOff = "gsgtrainsounds/other/joke/lionel_traintown/traintown_fenderbender.wav"        #The main whistle/horn sound.
+    SoundOn = "moztrainsounds/us_horns_bells/p3_fouled_loop.wav"        #Optional, this sound will play when you let go of the whistle/horn button (provided the appropriate variable is configured)
+    
+    Note1 = "D3"
+    Note2 = "B3"
+    Note3 = "G3"
+    Note4 = "E1"
+    Note5 = "C1"
+    
+    #You can list the notes with or without the octave number. If you omit the octave number (Example "C#" as opposed to "C2#") it will default to the middle octave (2).
+    
+    StartDiff = -10       #When you play the horn/whistle the chimes will start this many pitch units below their respective notes.
+    Interval = 0.001    #This is the rate by which the notes will travel from their start pitch to their resting note. Larger Number = Faster Adjustment.
+    
+    UseSoundOff = 0   #If 1, letting go of the whistle/horn button will play an "end" sound for the whistle/horn. If 0, the sound will simply fade (see next variable).
+    FadeTime = 5      #If "UseSoundOff" is set to 0, the whistle/horn will fade out over the course of this many seconds.
+    
+    MaxQuill = 100    #When you press EITHER A or D (but not both) the horn/whistle will be this many pitch units below the chosen chord (This is known as quilling)
+    Quinterval = 0.25   #The rate by which the horn will pitch up and down when quilling. Larger Number = Faster Adjustment.
+    
+    #[
+    
+    Need help finding a good chord? Try these chords taken from actual train horns.
+    
+    C D# F# A C#: Leslie S-5T
+    C# D# F G A#
+    B C# D# F# A: Leslie S-5A
+    
+    
+    
+    ]#
+    
+    Q = 0
+    
+    H1 = entity()
+    H2 = holoCreate(0,H1:pos())
+    H3 = holoCreate(1,H1:pos())
+    H4 = holoCreate(2,H1:pos())
+    H5 = holoCreate(3,H1:pos())
+    
+    
+    C1 = Note1:index(1)
+    C2 = Note1:index(2)
+    C3 = Note1:find("#") ? "#" : ""
+    if(!(C2 == "1" | C2 == "2" | C2 == "3" | C2 == "4")){
+        Note1 = C1 + "2" + C3
+    }
+    
+    C1 = Note2:index(1)
+    C2 = Note2:index(2)
+    C3 = Note2:find("#") ? "#" : ""
+    if(!(C2 == "1" | C2 == "2" | C2 == "3" | C2 == "4")){
+        Note2 = C1 + "2" + C3
+    }
+    
+    C1 = Note3:index(1)
+    C2 = Note3:index(2)
+    C3 = Note3:find("#") ? "#" : ""
+    if(!(C2 == "1" | C2 == "2" | C2 == "3" | C2 == "4")){
+        Note3 = C1 + "2" + C3
+    }
+    
+    C1 = Note4:index(1)
+    C2 = Note4:index(2)
+    C3 = Note4:find("#") ? "#" : ""
+    if(!(C2 == "1" | C2 == "2" | C2 == "3" | C2 == "4")){
+        Note4 = C1 + "2" + C3
+    }
+    
+    C1 = Note5:index(1)
+    C2 = Note5:index(2)
+    C3 = Note5:find("#") ? "#" : ""
+    if(!(C2 == "1" | C2 == "2" | C2 == "3" | C2 == "4")){
+        Note5 = C1 + "2" + C3
+    }
+    
+    holoAlpha(0,0)
+    holoAlpha(1,0)
+    holoAlpha(2,0)
+    holoAlpha(3,0)
+    holoParent(0,H1)
+    holoParent(1,H1)
+    holoParent(2,H1)
+    holoParent(3,H1)
+    
+    
+    T["C1",number]=25
+        T["C1#",number]=27
+    T["D1",number]=29
+        T["D1#",number]=30
+    T["E1",number]=32
+    T["F1",number]=34
+        T["F1#",number]=35
+    T["G1",number]=38
+        T["G1#",number]=40
+    T["A1",number]=42
+        T["A1#",number]=45
+    T["B1",number]=47
+    
+    T["C2",number]=50
+        T["C2#",number]=53
+    T["D2",number]=57
+        T["D2#",number]=59
+    T["E2",number]=63
+    T["F2",number]=67
+        T["F2#",number]=70
+    T["G2",number]=75
+        T["G2#",number]=79
+    T["A2",number]=84
+        T["A2#",number]=90
+    T["B2",number]=94
+    
+    T["C3",number]=100
+        T["C3#",number]=106
+    T["D3",number]=114
+        T["D3#",number]=118
+    T["E3",number]=126
+    T["F3",number]=134
+        T["F3#",number]=140
+    T["G3",number]=150
+        T["G3#",number]=158
+    T["A3",number]=168
+        T["A3#",number]=180
+    T["B3",number]=188
+    
+    T["C4",number]=200
+}
+if((A|D) & !Q){
+    Q = 1
+    Diff = StartDiff
+    Quill = MaxQuill
+    if(UseSoundOff){
+        soundStop(6)
+        soundStop(7)
+        soundStop(8)
+        soundStop(9)
+        soundStop(10)
+    }
+    
+    H1:soundPlay(1,0,SoundOn)
+    H2:soundPlay(2,0,SoundOn)
+    H3:soundPlay(3,0,SoundOn)
+    H4:soundPlay(4,0,"^"+SoundOn)
+    H5:soundPlay(5,0,"<"+SoundOn)
+    
+    soundPitch(1,T[Note1,number]+StartDiff-Quill)
+    soundPitch(2,T[Note2,number]+StartDiff-Quill)
+    soundPitch(3,T[Note3,number]+StartDiff-Quill)
+    soundPitch(4,T[Note4,number]+StartDiff-Quill)
+    soundPitch(5,T[Note5,number]+StartDiff-Quill)
+}elseif(!A & !D & Q){
+    Q = 0
+    
+    if(UseSoundOff){
+        soundStop(1)
+        soundStop(2)
+        soundStop(3)
+        soundStop(4)
+        soundStop(5)
+        
+        H1:soundPlay(6,0,SoundOff)
+        H2:soundPlay(7,0,SoundOff)
+        H3:soundPlay(8,0,SoundOff)
+        H4:soundPlay(9,0,"^"+SoundOff)
+        H5:soundPlay(10,0,"<"+SoundOff)
+        
+        soundPitch(6,T[Note1,number]+Diff-Quill)
+        soundPitch(7,T[Note2,number]+Diff-Quill)
+        soundPitch(8,T[Note3,number]+Diff-Quill)
+        soundPitch(9,T[Note4,number]+Diff-Quill)
+        soundPitch(10,T[Note5,number]+Diff-Quill)
+    }else{
+        soundStop(1,FadeTime)
+        soundStop(2,FadeTime)
+        soundStop(3,FadeTime)
+        soundStop(4,FadeTime)
+        soundStop(5,FadeTime)
+    }
+}
+
+if(Q & ((Diff!=0) | (Quill!=MaxQuill) | (A&D))){
+    interval(10)
+    
+    if(changed(Diff)|changed(Quill)){
+        soundPitch(1,T[Note1,number] + Diff - Quill)
+        soundPitch(2,T[Note2,number] + Diff - Quill)
+        soundPitch(3,T[Note3,number] + Diff - Quill)
+        soundPitch(4,T[Note4,number] + Diff - Quill)
+        soundPitch(5,T[Note5,number] + Diff - Quill)
+    }
+    if(Diff!=0){
+        Diff -= Interval*(sign(StartDiff))
+    }
+    
+    if(A&D){
+        Quill -= Quinterval
+    }else{
+        Quill += Quinterval
+    }
+    Quill = clamp(Quill,0,MaxQuill)
+}

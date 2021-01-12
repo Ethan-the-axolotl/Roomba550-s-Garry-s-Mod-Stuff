@@ -1,0 +1,55 @@
+@name Shape's FBD Interface
+@inputs EGP:wirelink EmBrake TruckCount RTD_Counter Running:number Analyzing Enable_True CarCount
+@persist Color4:vector
+#Made by shapesthepoolcleaner. Credit to Mr. Churros for inspiration and his RLC interface for helping me make this.
+#Wire EGP(Wirelink) to an EGP V3 screen.
+#Wire all the inputs on here to the outputs on the FBD. You may have to use an add gate for EmBrake.
+#For use with Magnums FBD
+
+Color1 = vec(255,255,255)
+Color2 = vec(200,0,0)
+Color3 = vec(255,0,0)
+Color4 = vec(0,255,0)
+
+    EGP:egpRoundedBox(1,vec2(256),vec2(500))
+    EGP:egpColor(1,Color1)
+    EGP:egpText(2,"FBD Interface made by Shapes",vec2(36,485))
+    EGP:egpColor(2,Color2)
+    EGP:egpRoundedBox(4,vec2(100,90),vec2(100,75))
+    EGP:egpColor(4,Color4)
+    EGP:egpText(3,"Truck count",vec2(50,25))
+    EGP:egpFont(3,"",81)
+    EGP:egpText(9,""+TruckCount,vec2(86,60))
+    EGP:egpText(8,"RTD Counter",vec2(160,25))
+    EGP:egpFont(8,"",21)
+    EGP:egpText(7,""+RTD_Counter,vec2(197,60))
+    EGP:egpFont(7,"",51)
+    EGP:egpColor(8,Color3)
+    EGP:egpColor(9,Color1)
+    EGP:egpFont(9,"",51)
+    EGP:egpColor(3,Color3)
+    EGP:egpFont(3,"",21)
+    EGP:egpRoundedBox(5,vec2(210,90),vec2(100,75))
+    EGP:egpRoundedBox(6,vec2(320,90),vec2(95,75))   
+    EGP:egpText(10,"Car Count",vec2(280,25))
+    EGP:egpColor(10,Color3)
+    EGP:egpFont(10,"",21)
+    EGP:egpText(11,""+CarCount,vec2(307,60))
+    EGP:egpFont(11,"",51)
+    
+    if(Running){ EGP:egpColor(5,Color4)
+    } 
+    if(!Running){ EGP:egpColor(5,Color3)
+    }
+
+    if(Analyzing){ EGP:egpColor(4,Color3)
+    } 
+    if(!Analyzing){ EGP:egpColor(4,Color4)
+    }
+    
+    if(EmBrake){ EGP:egpColor(6,Color3)
+    } 
+    if(!EmBrake){ EGP:egpColor(6,Color4)
+    }
+#Placeholder colors here until more code is done
+

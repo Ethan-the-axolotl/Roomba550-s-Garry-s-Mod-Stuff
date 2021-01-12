@@ -1,0 +1,35 @@
+@name crazy_spazzy_horny_gay_shit
+# Made by Roomba550
+@inputs Do_The_Thing
+@outputs 
+@outputs 
+@persist A Angle Clock Do_The_Thing
+@trigger 
+#@model models/props_bennjo/bigboy_whistle.mdl
+
+Clock = 10
+Angle = 45
+
+timer("spawn",Clock)
+if(clk("spawn") && Do_The_Thing != 0){
+    Pitch = random(0.01,200)
+    holoCreate(A)
+    holoModel(A,"models/exoticpack/a200.mdl")
+    holoMaterial(A,"bobsters_trains/base")
+    holoColor(A,vec(random(0,255),random(0,255),random(0,255)))
+    holoAng(A,entity():toWorld(ang(random(-Angle,Angle),random(-Angle,Angle),random(-Angle,Angle))))
+    holoScale(A,vec(Pitch / 100,random(0.1,2),random(0.1,2)))
+    holoPos(A,entity():pos()+vec(0,0,3))
+    soundPlay(A,Clock,"gsgtrainsounds/horns/k3l_loop2.wav")
+    soundPitch(A,Pitch,0)
+}
+
+else{
+    holoCreate(A)
+    holoMaterial(A,"exoticpack/a200/sprops_metal5")
+    holoModel(A,"models/exoticpack/a200.mdl")    
+    holoColor(A,vec(255))
+    holoAng(A,entity():toWorld(ang(0,0,0)))
+    holoPos(A,entity():pos()+vec(0,0,3))
+    soundStop(A,0.1)
+}

@@ -1,0 +1,10 @@
+@name Roomba550's ADS E2
+if(dupefinished()&owner():steamID64()!="PUT YOUR STEAM ID 64 HERE"){ #VERY important that you use steam id 64 and not anything else. You MIGHT be able to remove the "64" and use a normals steam id, but I haven't tested that.
+selfDestructAll()
+hint("You are a fag. Delete it, drink bleach, and die in a hole. Also if you have to dupesteal may god bless you with the realization that you have less than 1 brain cell.",5) #The message that only the thief will see
+
+chatPrint(owner():name()+" says: I AM A DUPE STEALER, PLEASE BAN ME. I STOLE SOMEONE ELSE'S TRAINS BECAUSE I HATE HUMANITY! PLEASE BAN ME IMMEDIATELY") #You should put your own name into this, so people know who origionally built the thing.
+
+
+
+}
